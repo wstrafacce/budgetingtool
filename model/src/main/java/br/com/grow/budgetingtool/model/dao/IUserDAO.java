@@ -7,13 +7,13 @@ import br.com.grow.budgetingtool.model.entities.User;
 
 public interface IUserDAO {
 
-	public List<User> findAllUsers();
+	public List<Object> findAllUsers();
 
-	public User findUserById(int index);
+	public Object findUserById(int index);
 
-	public User findUserByEmail(String email);
+	public Object findUserByEmail(String email);
 
-	public List<User> findUsersByEmailIn(Collection<String> emails);
+	public List<Object> findUsersByEmailIn(Collection<String> emails);
 
 	public Integer insertUser(User user);
 

@@ -76,7 +76,7 @@ public class Category {
 	}
 
 	public void setType(CategoryTypeEnum typeEnum) {
-		this.type = new CategoryTypeDAOImpl().findCategoryTypeById(typeEnum.getIndex());
+		this.type = (CategoryType) new CategoryTypeDAOImpl().findCategoryTypeById(typeEnum.getIndex());
 	}
 
 	public int getId() {

@@ -16,30 +16,33 @@ public class InsertModeDAOImpl implements IInsertModeDAO{
 	
 	private final transient Configuration config = new Configuration().configure().addAnnotatedClass(InsertMode.class);
 
-	public List<InsertMode> findAllInsertModes() {		
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findAllInsertModes() {		
 
-		List<InsertMode> insertMode = null;
+		List<Object> insertModes = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		
 		try {
 			Query query = session.getNamedQuery("findAllInsertModes");
-			insertMode = query.getResultList();
+			insertModes = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
-		return insertMode;
+		return insertModes;
 	}
 
-	public InsertMode findInsertModeById(int index) {
-		InsertMode insertMode = null;
+	@Override
+	public Object findInsertModeById(int index) {
+		Object insertMode = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		
 		try {
 			Query query = session.getNamedQuery("findInsertModeById");
 			query.setParameter("id", index);
-			insertMode = (InsertMode) query.getSingleResult();
+			insertMode = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {

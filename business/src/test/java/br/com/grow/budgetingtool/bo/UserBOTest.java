@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
 
+import br.com.grow.budgetingtool.bo.impl.UserBO;
 import br.com.grow.budgetingtool.model.enuns.StatusEnum;
 import br.com.grow.budgetingtool.vo.UserVO;
 

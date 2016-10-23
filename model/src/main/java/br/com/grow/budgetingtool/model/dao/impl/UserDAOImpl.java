@@ -14,6 +14,7 @@ import org.hibernate.cfg.Configuration;
 import br.com.grow.budgetingtool.model.dao.IUserDAO;
 import br.com.grow.budgetingtool.model.entities.Status;
 import br.com.grow.budgetingtool.model.entities.User;
+import br.com.grow.budgetingtool.model.enuns.StatusEnum;
 import br.com.grow.budgetingtool.model.util.HibernateUtil;
 
 public class UserDAOImpl implements IUserDAO {
@@ -22,30 +23,33 @@ public class UserDAOImpl implements IUserDAO {
 			.addAnnotatedClass(User.class)
 			.addAnnotatedClass(Status.class);
 
-	public List<User> findAllUsers() {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findAllUsers() {
 
-		List<User> user = null;
+		List<Object> users = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findAllUsers");
-			user = query.getResultList();
+			users = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
-		return user;
+		return users;
 	}
 
-	public User findUserById(int index) {
-		User user = null;
+	@Override
+	public Object findUserById(int index) {
+		Object user = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findUserById");
 			query.setParameter("id", index);
-			user = (User) query.getSingleResult();
+			user = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -54,14 +58,15 @@ public class UserDAOImpl implements IUserDAO {
 		return user;
 	}
 
-	public User findUserByEmail(String email) {
-		User user = null;
+	@Override
+	public Object findUserByEmail(String email) {
+		Object user = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findUserByEmail");
 			query.setParameter("email", email);
-			user = (User) query.getSingleResult();
+			user = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -70,8 +75,10 @@ public class UserDAOImpl implements IUserDAO {
 		return user;
 	}
 
-	public List<User> findUsersByEmailIn(Collection<String> emails) {
-		List<User> users = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findUsersByEmailIn(Collection<String> emails) {
+		List<Object> users = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -86,6 +93,7 @@ public class UserDAOImpl implements IUserDAO {
 		return users;
 	}
 
+	@Override
 	public Integer insertUser(User user) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
@@ -104,6 +112,7 @@ public class UserDAOImpl implements IUserDAO {
 		return userID;
 	}
 
+	@Override
 	public void updateUser(User user) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
@@ -144,6 +153,7 @@ public class UserDAOImpl implements IUserDAO {
 		}
 	}
 
+	@Override
 	public void deleteUser(User user) {
 
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
@@ -151,7 +161,8 @@ public class UserDAOImpl implements IUserDAO {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			session.delete(user);
+			user.setStatus(StatusEnum.INACTIVE);
+			session.update(user);
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null)

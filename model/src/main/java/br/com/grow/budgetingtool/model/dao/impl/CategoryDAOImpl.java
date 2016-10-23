@@ -22,9 +22,11 @@ public class CategoryDAOImpl implements ICategoryDAO{
 			.addAnnotatedClass(Category.class)
 			.addAnnotatedClass(CategoryType.class);
 
-	public List<Category> findAllCategories() {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findAllCategories() {
 
-		List<Category> categories = null;
+		List<Object> categories = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -38,14 +40,15 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return categories;
 	}
 
-	public Category findCategoryById(int index) {
-		Category category = null;
+	@Override
+	public Object findCategoryById(int index) {
+		Object category = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findCategoryById");
 			query.setParameter("id", index);
-			category = (Category) query.getSingleResult();
+			category = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -54,14 +57,15 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return category;
 	}
 
-	public Category findCategoryByName(String name) {
-		Category category = null;
+	@Override
+	public Object findCategoryByName(String name) {
+		Object category = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findCategoryByName");
 			query.setParameter("name", name);
-			category = (Category) query.getSingleResult();
+			category = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -70,8 +74,10 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return category;
 	}
 
-	public List<Category> findCategoriesByNameLike(String name) {
-		List<Category> categories = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findCategoriesByNameLike(String name) {
+		List<Object> categories = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -86,8 +92,10 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return categories;
 	}
 
-	public List<Category> findCategoriesByNameIn(Collection<String> names) {
-		List<Category> categories = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findCategoriesByNameIn(Collection<String> names) {
+		List<Object> categories = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -102,6 +110,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return categories;
 	}
 
+	@Override
 	public Integer insertCategory(Category category) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
@@ -120,6 +129,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return categoryID;
 	}
 
+	@Override
 	public void updateCategory(Category category) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
@@ -148,6 +158,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		}
 	}
 
+	@Override
 	public void deleteCategory(Category user) {
 
 		Session session = HibernateUtil.getSessionFactory(config).openSession();

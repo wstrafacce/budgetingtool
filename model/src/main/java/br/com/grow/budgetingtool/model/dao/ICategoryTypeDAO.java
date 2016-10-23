@@ -2,12 +2,10 @@ package br.com.grow.budgetingtool.model.dao;
 
 import java.util.List;
 
-import br.com.grow.budgetingtool.model.entities.CategoryType;
-
 public interface ICategoryTypeDAO {
 	
-	public List<CategoryType> findAllCategoryTypes();
+	public List<Object> findAllCategoryTypes();
 
-	public CategoryType findCategoryTypeById(int index);
+	public Object findCategoryTypeById(int index);
 
 }

@@ -108,7 +108,7 @@ public class User {
 	}
 
 	public void setStatus(StatusEnum statusEnum) {
-		this.status = new StatusDAOImpl().findStatusById(statusEnum.getIndex());
+		this.status = (Status) new StatusDAOImpl().findStatusById(statusEnum.getIndex());
 	}
 
 	public File getPicture() {

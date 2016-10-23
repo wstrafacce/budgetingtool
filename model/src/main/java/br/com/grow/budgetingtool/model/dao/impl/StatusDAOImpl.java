@@ -17,9 +17,11 @@ public class StatusDAOImpl implements IStatusDAO{
 	private final transient Configuration config = new Configuration().configure()
 			.addAnnotatedClass(Status.class);
 
-	public List<Status> findAllStatus() {		
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findAllStatus() {		
 
-		List<Status> status = null;
+		List<Object> status = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		
 		try {
@@ -33,14 +35,15 @@ public class StatusDAOImpl implements IStatusDAO{
 		return status;
 	}
 
-	public Status findStatusById(int index) {
-		Status status = null;
+	@Override
+	public Object findStatusById(int index) {
+		Object status = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		
 		try {
 			Query query = session.getNamedQuery("findStatusById");
 			query.setParameter("id", index);
-			status = (Status) query.getSingleResult();
+			status = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {

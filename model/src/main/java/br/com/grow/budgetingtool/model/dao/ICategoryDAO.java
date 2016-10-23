@@ -7,15 +7,15 @@ import br.com.grow.budgetingtool.model.entities.Category;
 
 public interface ICategoryDAO {
 	
-	public List<Category> findAllCategories();
+	public List<Object> findAllCategories();
 
-	public Category findCategoryById(int index);
+	public Object findCategoryById(int index);
 
-	public Category findCategoryByName(String name);
+	public Object findCategoryByName(String name);
 
-	public List<Category> findCategoriesByNameLike(String name);
+	public List<Object> findCategoriesByNameLike(String name);
 
-	public List<Category> findCategoriesByNameIn(Collection<String> names);
+	public List<Object> findCategoriesByNameIn(Collection<String> names);
 
 	public Integer insertCategory(Category category);
 

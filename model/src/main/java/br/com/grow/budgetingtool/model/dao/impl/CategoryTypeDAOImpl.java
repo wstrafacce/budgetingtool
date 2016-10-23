@@ -16,9 +16,11 @@ public class CategoryTypeDAOImpl implements ICategoryTypeDAO{
 	
 	private final transient Configuration config = new Configuration().configure().addAnnotatedClass(CategoryType.class);
 
-	public List<CategoryType> findAllCategoryTypes() {		
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findAllCategoryTypes() {		
 
-		List<CategoryType> categoryTypes = null;
+		List<Object> categoryTypes = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		
 		try {
@@ -32,14 +34,15 @@ public class CategoryTypeDAOImpl implements ICategoryTypeDAO{
 		return categoryTypes;
 	}
 
-	public CategoryType findCategoryTypeById(int index) {
-		CategoryType categoryType = null;
+	@Override
+	public Object findCategoryTypeById(int index) {
+		Object categoryType = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		
 		try {
 			Query query = session.getNamedQuery("findCategoryTypeById");
 			query.setParameter("id", index);
-			categoryType = (CategoryType) query.getSingleResult();
+			categoryType = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {

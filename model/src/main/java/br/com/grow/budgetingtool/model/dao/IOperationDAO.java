@@ -11,27 +11,27 @@ import br.com.grow.budgetingtool.model.entities.Operation;
 
 public interface IOperationDAO {
 	
-	public List<Operation> findAllOperations();
+	public List<Object> findAllOperations();
 
-	public Operation findOperationById(int index);
+	public Object findOperationById(int index);
 	
-	public Operation findOperationByName(String name);
+	public Object findOperationByName(String name);
 	
-	public List<Operation> findOperationsByNameLike(String name);
+	public List<Object> findOperationsByNameLike(String name);
 	
-	public List<Operation> findOperationsByNameIn(Collection<String> names);
+	public List<Object> findOperationsByNameIn(Collection<String> names);
 
-	public Operation findOperationsByCategory(Category category);
+	public Object findOperationsByCategory(Category category);
 	
-	public List<Operation> findOperationsByCategoryLike(String category);
+	public List<Object> findOperationsByCategoryLike(String category);
 	
-	public List<Operation> findOperationsByCategoryIn(Collection<String> categories);
+	public List<Object> findOperationsByCategoryIn(Collection<String> categories);
 	
-	public List<Operation> findOperationsByDate(Timestamp date);
+	public List<Object> findOperationsByDate(Timestamp date);
 	
-	public List<Operation> findOperationsByPeriod(Timestamp startDate, Timestamp endDate);
+	public List<Object> findOperationsByPeriod(Timestamp startDate, Timestamp endDate);
 	
-	public List<Operation> findOperationsByValue(float startValue, float endValue);
+	public List<Object> findOperationsByValue(float startValue, float endValue);
 	
 	public Integer insertOperation(Operation operation);
 

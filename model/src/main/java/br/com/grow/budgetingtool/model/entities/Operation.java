@@ -163,7 +163,7 @@ public class Operation {
 	}
 
 	public void setInsertMode(InsertModeEnum insertModeEnum) {
-		this.insertMode = new InsertModeDAOImpl().findInsertModeById(insertModeEnum.getIndex());
+		this.insertMode = (InsertMode) new InsertModeDAOImpl().findInsertModeById(insertModeEnum.getIndex());
 	}
 
 	public int getId() {

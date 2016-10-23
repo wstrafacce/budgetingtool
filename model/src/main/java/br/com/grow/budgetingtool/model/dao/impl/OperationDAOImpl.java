@@ -30,9 +30,11 @@ public class OperationDAOImpl implements IOperationDAO{
 			.addAnnotatedClass(User.class)
 			.addAnnotatedClass(InsertMode.class);
 
-	public List<Operation> findAllOperations() {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findAllOperations() {
 
-		List<Operation> operations = null;
+		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -46,14 +48,15 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 
-	public Operation findOperationById(int index) {
-		Operation operation = null;
+	@Override
+	public Object findOperationById(int index) {
+		Object operation = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationById");
 			query.setParameter("id", index);
-			operation = (Operation) query.getSingleResult();
+			operation = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -62,14 +65,15 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operation;
 	}
 	
-	public Operation findOperationByName(String name) {
-		Operation operation = null;
+	@Override
+	public Object findOperationByName(String name) {
+		Object operation = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationByName");
 			query.setParameter("name", name);
-			operation = (Operation) query.getSingleResult();
+			operation = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -78,8 +82,10 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operation;
 	}
 	
-	public List<Operation> findOperationsByNameLike(String name) {
-		List<Operation> operations = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findOperationsByNameLike(String name) {
+		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -94,8 +100,10 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 	
-	public List<Operation> findOperationsByNameIn(Collection<String> names) {
-		List<Operation> operations = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findOperationsByNameIn(Collection<String> names) {
+		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -110,14 +118,15 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 
-	public Operation findOperationsByCategory(Category category) {
-		Operation operation = null;
+	@Override
+	public Object findOperationsByCategory(Category category) {
+		Object operation = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationsByCategory");
 			query.setParameter("category", category.getName());
-			operation = (Operation) query.getSingleResult();
+			operation = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -126,8 +135,10 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operation;
 	}
 	
-	public List<Operation> findOperationsByCategoryLike(String category) {
-		List<Operation> operations = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findOperationsByCategoryLike(String category) {
+		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -142,8 +153,10 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 	
-	public List<Operation> findOperationsByCategoryIn(Collection<String> categories) {
-		List<Operation> operations = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findOperationsByCategoryIn(Collection<String> categories) {
+		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -158,8 +171,10 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 	
-	public List<Operation> findOperationsByDate(Timestamp date) {
-		List<Operation> operations = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findOperationsByDate(Timestamp date) {
+		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -174,8 +189,10 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 	
-	public List<Operation> findOperationsByPeriod(Timestamp startDate, Timestamp endDate) {
-		List<Operation> operations = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findOperationsByPeriod(Timestamp startDate, Timestamp endDate) {
+		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -191,8 +208,10 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 	
-	public List<Operation> findOperationsByValue(float startValue, float endValue) {
-		List<Operation> operations = null;
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findOperationsByValue(float startValue, float endValue) {
+		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
@@ -208,6 +227,7 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 	
+	@Override
 	public Integer insertOperation(Operation operation) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
@@ -226,11 +246,11 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operationID;
 	}
 
+	@Override
 	public List<Integer> insertAllOperations(Collection<Operation> operations) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
 		List<Integer> operationIDs = new ArrayList<Integer>();
-		Integer operationID = null;
 
 		for (Operation operation : operations) {
 			try {
@@ -248,6 +268,7 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operationIDs;
 	}
 
+	@Override
 	public void updateManualOperation(Operation operation) throws OperationNotSupportedException {
 		if (InsertModeEnum.MANUAL.equals(operation.getInsertMode())) {
 			Session session = HibernateUtil.getSessionFactory(config).openSession();
@@ -289,6 +310,7 @@ public class OperationDAOImpl implements IOperationDAO{
 		}
 	}
 
+	@Override
 	public List<Integer> updateAllManualOperations(Collection<Operation> operations) {
 		Session session = null;
 		List<Integer> operationIDs = null;
@@ -342,6 +364,7 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operationIDs;
 	}
 
+	@Override
 	public void deleteManualOperation(Operation operation) throws OperationNotSupportedException {
 		if (InsertModeEnum.MANUAL.equals(operation.getInsertMode())) {
 
@@ -365,6 +388,7 @@ public class OperationDAOImpl implements IOperationDAO{
 
 	}
 
+	@Override
 	public List<Integer> deleteAllManualOperations(Collection<Operation> operations) {
 		Session session = null;
 		List<Integer> operationIDs = null;
