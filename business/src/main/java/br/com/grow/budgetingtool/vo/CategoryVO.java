@@ -45,6 +45,16 @@ public class CategoryVO {
 		Method methodObj = refClass.getDeclaredMethod("setStatus", StatusEnum.class);
 		methodObj.invoke(instanceObj, categoryTypeEnum);
 	}
+	
+	public UserVO getUser() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException {
+		Method methodObj = refClass.getDeclaredMethod("getUser");		
+		return (UserVO) new UserVO(methodObj.invoke(instanceObj)).getRefClassInstance();
+	}
+
+	public void setUser(UserVO userVO) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Method methodObj = refClass.getDeclaredMethod("setUser", userVO.getRefClassInstance().getClass());
+		methodObj.invoke(instanceObj, userVO.getRefClassInstance());
+	}
 
 	public int getId() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Method methodObj = refClass.getDeclaredMethod("getId");

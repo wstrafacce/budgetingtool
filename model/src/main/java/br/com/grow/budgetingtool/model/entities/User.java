@@ -21,7 +21,7 @@ import br.com.grow.budgetingtool.model.enuns.StatusEnum;
 @NamedNativeQueries({
 	@NamedNativeQuery(
 	name = "findAllUsers",
-	query = "SELECT * FROM TB_USER ODER BY ID",
+	query = "SELECT * FROM TB_USER ORDER BY NAME",
 	resultClass = User.class
 	),
 	
@@ -39,7 +39,7 @@ import br.com.grow.budgetingtool.model.enuns.StatusEnum;
 	
 	@NamedNativeQuery(
 	name = "findUsersByEmailIn",
-	query = "SELECT * FROM TB_USER WHERE EMAIL IN (:emailCollection)",
+	query = "SELECT * FROM TB_USER WHERE EMAIL IN (:emailCollection) ORDER BY NAME",
 	resultClass = User.class
 	)
 })

@@ -19,7 +19,7 @@ import br.com.grow.budgetingtool.model.enuns.CategoryTypeEnum;
 @NamedNativeQueries({
 	@NamedNativeQuery(
 	name = "findAllCategories",
-	query = "SELECT * FROM TB_CATEGORY ODER BY ID",
+	query = "SELECT * FROM TB_CATEGORY ORDER BY NAME",
 	resultClass = Category.class
 	),
 	
@@ -31,19 +31,25 @@ import br.com.grow.budgetingtool.model.enuns.CategoryTypeEnum;
 	
 	@NamedNativeQuery(
 	name = "findCategoyByName",
-	query = "SELECT * FROM TB_CATEGORY WHERE NAME = :name",
+	query = "SELECT * FROM TB_CATEGORY WHERE NAME = :name AND USER = :user ORDER BY NAME",
 	resultClass = Category.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findCategoriesByNameLike",
-	query = "SELECT * FROM TB_CATEGORY WHERE NAME LIKE '%:name%'",
+	query = "SELECT * FROM TB_CATEGORY WHERE NAME LIKE '%:name%' AND USER :user ORDER BY NAME",
 	resultClass = Category.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findCategoriesByNameIn",
-	query = "SELECT * FROM TB_CATEGORY WHERE NAME IN (:nameCollection)",
+	query = "SELECT * FROM TB_CATEGORY WHERE NAME IN (:nameCollection) AND USER = :user ORDER BY NAME",
+	resultClass = Category.class
+	),
+	
+	@NamedNativeQuery(
+	name = "findCategoriesByUser",
+	query = "SELECT * FROM TB_CATEGORY WHERE USER = :user ORDER BY NAME",
 	resultClass = Category.class
 	)
 })
@@ -62,6 +68,10 @@ public class Category {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "TYPE")
 	private CategoryType type;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "USER")
+	private User user;	
 
 	public String getName() {
 		return name;
@@ -77,6 +87,14 @@ public class Category {
 
 	public void setType(CategoryTypeEnum typeEnum) {
 		this.type = (CategoryType) new CategoryTypeDAOImpl().findCategoryTypeById(typeEnum.getIndex());
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getId() {

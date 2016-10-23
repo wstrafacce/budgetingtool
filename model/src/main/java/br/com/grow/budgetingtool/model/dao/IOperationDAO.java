@@ -6,43 +6,42 @@ import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
-import br.com.grow.budgetingtool.model.entities.Category;
-import br.com.grow.budgetingtool.model.entities.Operation;
-
 public interface IOperationDAO {
 	
 	public List<Object> findAllOperations();
 
 	public Object findOperationById(int index);
 	
-	public Object findOperationByName(String name);
+	public Object findOperationByName(String name, Object userObj);
 	
-	public List<Object> findOperationsByNameLike(String name);
+	public List<Object> findOperationsByNameLike(String name, Object userObj);
 	
-	public List<Object> findOperationsByNameIn(Collection<String> names);
+	public List<Object> findOperationsByNameIn(Collection<String> names, Object userObj);
 
-	public Object findOperationsByCategory(Category category);
+	public List<Object> findOperationsByCategory(Object category, Object userObj);
 	
-	public List<Object> findOperationsByCategoryLike(String category);
+	public List<Object> findOperationsByCategoryLike(String category, Object userObj);
 	
-	public List<Object> findOperationsByCategoryIn(Collection<String> categories);
+	public List<Object> findOperationsByCategoryIn(Collection<String> categories, Object userObj);
 	
-	public List<Object> findOperationsByDate(Timestamp date);
+	public List<Object> findOperationsByDate(Timestamp date, Object userObj);
 	
-	public List<Object> findOperationsByPeriod(Timestamp startDate, Timestamp endDate);
+	public List<Object> findOperationsByPeriod(Timestamp startDate, Timestamp endDate, Object userObj);
 	
-	public List<Object> findOperationsByValue(float startValue, float endValue);
+	public List<Object> findOperationsByValue(float startValue, float endValue, Object userObj);
 	
-	public Integer insertOperation(Operation operation);
+	public List<Object> findOperationsByUser(Object userObj);
+	
+	public Integer insertOperation(Object operation);
 
-	public List<Integer> insertAllOperations(Collection<Operation> operations);
+	public List<Integer> insertAllOperations(Collection<Object> operations);
 
-	public void updateManualOperation(Operation operation) throws OperationNotSupportedException;
+	public void updateManualOperation(Object operation) throws OperationNotSupportedException;
 
-	public List<Integer> updateAllManualOperations(Collection<Operation> operations);
+	public List<Integer> updateAllManualOperations(Collection<Object> operations);
 
-	public void deleteManualOperation(Operation operation) throws OperationNotSupportedException;
+	public void deleteManualOperation(Object operation) throws OperationNotSupportedException;
 
-	public List<Integer> deleteAllManualOperations(Collection<Operation> operations);
+	public List<Integer> deleteAllManualOperations(Collection<Object> operations);
 
 }

@@ -66,13 +66,15 @@ public class OperationDAOImpl implements IOperationDAO{
 	}
 	
 	@Override
-	public Object findOperationByName(String name) {
+	public Object findOperationByName(String name, Object userObj) {
 		Object operation = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationByName");
 			query.setParameter("name", name);
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
 			operation = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -84,13 +86,15 @@ public class OperationDAOImpl implements IOperationDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findOperationsByNameLike(String name) {
+	public List<Object> findOperationsByNameLike(String name, Object userObj) {
 		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationsByNameLike");
 			query.setParameter("name", name);
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
 			operations = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -102,13 +106,15 @@ public class OperationDAOImpl implements IOperationDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findOperationsByNameIn(Collection<String> names) {
+	public List<Object> findOperationsByNameIn(Collection<String> names, Object userObj) {
 		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationsByNameIn");
 			query.setParameter("nameCollection", names);
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
 			operations = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -118,15 +124,19 @@ public class OperationDAOImpl implements IOperationDAO{
 		return operations;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object findOperationsByCategory(Category category) {
-		Object operation = null;
+	public List<Object> findOperationsByCategory(Object categoryObj, Object userObj) {
+		List<Object> operation = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationsByCategory");
-			query.setParameter("category", category.getName());
-			operation = query.getSingleResult();
+			Category category = (Category) categoryObj;
+			query.setParameter("category", category.getId());
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
+			operation = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -137,13 +147,15 @@ public class OperationDAOImpl implements IOperationDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findOperationsByCategoryLike(String category) {
+	public List<Object> findOperationsByCategoryLike(String category, Object userObj) {
 		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationsByCategoryLike");
 			query.setParameter("category", category);
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
 			operations = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -155,13 +167,15 @@ public class OperationDAOImpl implements IOperationDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findOperationsByCategoryIn(Collection<String> categories) {
+	public List<Object> findOperationsByCategoryIn(Collection<String> categories, Object userObj) {
 		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationsByCategoryIn");
 			query.setParameter("categoryCollection", categories);
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
 			operations = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -173,13 +187,15 @@ public class OperationDAOImpl implements IOperationDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findOperationsByDate(Timestamp date) {
+	public List<Object> findOperationsByDate(Timestamp date, Object userObj) {
 		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationsByDate");
 			query.setParameter("date", date.toString());
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
 			operations = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -191,7 +207,7 @@ public class OperationDAOImpl implements IOperationDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findOperationsByPeriod(Timestamp startDate, Timestamp endDate) {
+	public List<Object> findOperationsByPeriod(Timestamp startDate, Timestamp endDate, Object userObj) {
 		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
@@ -199,6 +215,8 @@ public class OperationDAOImpl implements IOperationDAO{
 			Query query = session.getNamedQuery("findOperationsByPeriod");
 			query.setParameter("startDate", startDate.toString());
 			query.setParameter("endDate", endDate.toString());
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
 			operations = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -210,14 +228,35 @@ public class OperationDAOImpl implements IOperationDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findOperationsByValue(float startValue, float endValue) {
+	public List<Object> findOperationsByValue(float startValue, float endValue, Object userObj) {
 		List<Object> operations = null;
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		try {
 			Query query = session.getNamedQuery("findOperationsByValue");
-			query.setParameter("startDate", startValue);
-			query.setParameter("endDate", endValue);
+			query.setParameter("startValue", startValue);
+			query.setParameter("endValue", endValue);
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
+			operations = query.getResultList();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return operations;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> findOperationsByUser(Object userObj) {
+		List<Object> operations = null;
+		Session session = HibernateUtil.getSessionFactory(config).openSession();
+
+		try {
+			Query query = session.getNamedQuery("findOperationsByUser");
+			User user = (User) userObj;
+			query.setParameter("user", user.getId());
 			operations = query.getResultList();
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -228,7 +267,7 @@ public class OperationDAOImpl implements IOperationDAO{
 	}
 	
 	@Override
-	public Integer insertOperation(Operation operation) {
+	public Integer insertOperation(Object operation) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
 		Integer operationID = null;
@@ -247,29 +286,24 @@ public class OperationDAOImpl implements IOperationDAO{
 	}
 
 	@Override
-	public List<Integer> insertAllOperations(Collection<Operation> operations) {
-		Session session = HibernateUtil.getSessionFactory(config).openSession();
-		Transaction tx = null;
-		List<Integer> operationIDs = new ArrayList<Integer>();
-
-		for (Operation operation : operations) {
-			try {
-				tx = session.beginTransaction();
-				operationIDs.add((Integer) session.save(operation));
-				tx.commit();
-			} catch (HibernateException e) {
-				if (tx != null)
-					tx.rollback();
-				e.printStackTrace();
-			}
+	public List<Integer> insertAllOperations(Collection<Object> operations) {
+		List<Integer> operationIDs = null;
+		for (Object operation : operations) {
+				int operationId = insertOperation(operation);
+				
+				if (operationIDs == null){
+					operationIDs = new ArrayList<Integer>();
+				}
+				
+				operationIDs.add(operationId);
 		}
 
-		session.close();
 		return operationIDs;
 	}
 
 	@Override
-	public void updateManualOperation(Operation operation) throws OperationNotSupportedException {
+	public void updateManualOperation(Object operationObj) throws OperationNotSupportedException {
+		Operation operation = (Operation) operationObj;
 		if (InsertModeEnum.MANUAL.equals(operation.getInsertMode())) {
 			Session session = HibernateUtil.getSessionFactory(config).openSession();
 			Transaction tx = null;
@@ -311,61 +345,30 @@ public class OperationDAOImpl implements IOperationDAO{
 	}
 
 	@Override
-	public List<Integer> updateAllManualOperations(Collection<Operation> operations) {
-		Session session = null;
+	public List<Integer> updateAllManualOperations(Collection<Object> operations) {
 		List<Integer> operationIDs = null;
 
-		for (Operation operation : operations) {
-			if (InsertModeEnum.MANUAL.equals(operation.getInsertMode())) {
-
-				if (session == null) {
-					session = HibernateUtil.getSessionFactory(config).openSession();
+		for (Object operationObj : operations) {
+			try {
+				updateManualOperation(operationObj);
+				
+				if (operationIDs == null){
 					operationIDs = new ArrayList<Integer>();
 				}
-
-				Transaction tx = null;
-				try {
-
-					tx = session.beginTransaction();
-
-					Operation oldOperation = (Operation) session.get(Operation.class, operation.getId());
-
-					if (StringUtils.isNotBlank(operation.getName())) {
-						oldOperation.setName(operation.getName());
-					}
-
-					if (operation.getValue() != 0.0) {
-						oldOperation.setValue(operation.getValue());
-					}
-
-					if (operation.getDate() != null) {
-						oldOperation.setDate(operation.getDate());
-					}
-
-					if (operation.getCategory() != null) {
-						oldOperation.setCategory(operation.getCategory());
-					}
-
-					session.update(oldOperation);
-					operationIDs.add(oldOperation.getId());
-					tx.commit();
-				} catch (HibernateException e) {
-					if (tx != null)
-						tx.rollback();
-					e.printStackTrace();
-				}
+				Operation operation = (Operation) operationObj;
+				operationIDs.add(operation.getId());
+			} catch (OperationNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}
-
-		if (session != null) {
-			session.close();
 		}
 
 		return operationIDs;
 	}
 
 	@Override
-	public void deleteManualOperation(Operation operation) throws OperationNotSupportedException {
+	public void deleteManualOperation(Object operationObj) throws OperationNotSupportedException {
+		Operation operation = (Operation) operationObj;
 		if (InsertModeEnum.MANUAL.equals(operation.getInsertMode())) {
 
 			Session session = HibernateUtil.getSessionFactory(config).openSession();
@@ -389,36 +392,22 @@ public class OperationDAOImpl implements IOperationDAO{
 	}
 
 	@Override
-	public List<Integer> deleteAllManualOperations(Collection<Operation> operations) {
-		Session session = null;
+	public List<Integer> deleteAllManualOperations(Collection<Object> operations) {
 		List<Integer> operationIDs = null;
 
-		for (Operation operation : operations) {
-			if (InsertModeEnum.MANUAL.equals(operation.getInsertMode())) {
+		for (Object operationObj : operations) {
+			try {
+				deleteManualOperation(operationObj);
 				
-				if (session == null) {
-					session = HibernateUtil.getSessionFactory(config).openSession();
+				if (operationIDs == null){
 					operationIDs = new ArrayList<Integer>();
 				}
-				
-				Transaction tx = null;
-				try {
-					tx = session.beginTransaction();
-					session.delete(operation);
-					operationIDs.add(operation.getId());
-					tx.commit();
-				} catch (HibernateException e) {
-					if (tx != null)
-						tx.rollback();
-					e.printStackTrace();
-				} finally {
-					session.close();
-				}
-			} 
-		}
-
-		if (session != null) {
-			session.close();
+				Operation operation = (Operation) operationObj;
+				operationIDs.add(operation.getId());
+			} catch (OperationNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		return operationIDs;

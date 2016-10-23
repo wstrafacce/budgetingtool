@@ -94,13 +94,13 @@ public class UserDAOImpl implements IUserDAO {
 	}
 
 	@Override
-	public Integer insertUser(User user) {
+	public Integer insertUser(Object userObj) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
 		Integer userID = null;
 		try {
 			tx = session.beginTransaction();
-			userID = (Integer) session.save(user);
+			userID = (Integer) session.save(userObj);
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null)
@@ -113,11 +113,13 @@ public class UserDAOImpl implements IUserDAO {
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public void updateUser(Object userObj) {
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
+			
+			User user = (User) userObj;
 
 			User oldUser = (User) session.get(User.class, user.getId());
 
@@ -154,13 +156,14 @@ public class UserDAOImpl implements IUserDAO {
 	}
 
 	@Override
-	public void deleteUser(User user) {
+	public void deleteUser(Object userObj) {
 
 		Session session = HibernateUtil.getSessionFactory(config).openSession();
 
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
+			User user = (User) userObj;
 			user.setStatus(StatusEnum.INACTIVE);
 			session.update(user);
 			tx.commit();

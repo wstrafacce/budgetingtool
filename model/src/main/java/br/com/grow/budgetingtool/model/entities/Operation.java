@@ -23,7 +23,7 @@ import br.com.grow.budgetingtool.model.enuns.InsertModeEnum;
 @NamedNativeQueries({
 	@NamedNativeQuery(
 	name = "findAllOperations",
-	query = "SELECT * FROM TB_OPERATION ODER BY ID",
+	query = "SELECT * FROM TB_OPERATION ORDER BY OP_DATE",
 	resultClass = Operation.class
 	),
 	
@@ -35,55 +35,61 @@ import br.com.grow.budgetingtool.model.enuns.InsertModeEnum;
 	
 	@NamedNativeQuery(
 	name = "findOperationByName",
-	query = "SELECT * FROM TB_OPERATION WHERE NAME = :name",
+	query = "SELECT * FROM TB_OPERATION WHERE NAME = :name AND USER = :user",
 	resultClass = Operation.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findOperationsByNameLike",
-	query = "SELECT * FROM TB_OPERATION WHERE NAME LIKE '%:name%'",
+	query = "SELECT * FROM TB_OPERATION WHERE NAME LIKE '%:name%' AND USER = :user ORDER BY OP_DATE",
 	resultClass = Operation.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findOperationsByNameIn",
-	query = "SELECT * FROM TB_OPERATION WHERE NAME IN (:nameCollection)",
+	query = "SELECT * FROM TB_OPERATION WHERE NAME IN (:nameCollection) AND USER = :user ORDER BY OP_DATE",
 	resultClass = Operation.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findOperationsByCategory",
-	query = "SELECT * FROM TB_OPERATION WHERE CATEGORY = :category",
+	query = "SELECT * FROM TB_OPERATION WHERE CATEGORY = :category AND USER = :user ORDER BY OP_DATE",
 	resultClass = Operation.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findOperationsByCategoryLike",
-	query = "SELECT * FROM TB_OPERATION OP INNER JOIN TB_CATEGORY CT ON OP.CATEGORY = CT.ID WHERE CT.NAME LIKE '%:category'",
+	query = "SELECT * FROM TB_OPERATION OP INNER JOIN TB_CATEGORY CT ON OP.CATEGORY = CT.ID WHERE CT.NAME LIKE '%:category%' AND OP.USER = :user ORDER BY OP_DATE",
 	resultClass = Operation.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findOperationsByCategoryIn",
-	query = "SELECT * FROM TB_OPERATION WHERE CATEGORY IN (:categoryCollection)",
+	query = "SELECT * FROM TB_OPERATION WHERE CATEGORY IN (:categoryCollection) AND USER = :user ORDER BY OP_DATE",
 	resultClass = Operation.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findOperationsByDate",
-	query = "SELECT * FROM TB_OPERATION WHERE OP_DATE = :date",
+	query = "SELECT * FROM TB_OPERATION WHERE OP_DATE = :date AND USER = :user ORDER BY OP_DATE",
 	resultClass = Operation.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findOperationsByPeriod",
-	query = "SELECT * FROM TB_OPERATION WHERE OP_DATE BETWEEN :startDate AND :endDate",
+	query = "SELECT * FROM TB_OPERATION WHERE OP_DATE BETWEEN :startDate AND :endDate AND USER = :user ORDER BY OP_DATE",
 	resultClass = Operation.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findOperationsByValue",
-	query = "SELECT * FROM TB_OPERATION WHERE VALUE BETWEEN :startValue AND :endValue",
+	query = "SELECT * FROM TB_OPERATION WHERE VALUE BETWEEN :startValue AND :endValue AND USER = :user ORDER BY OP_DATE",
+	resultClass = Operation.class
+	),
+	
+	@NamedNativeQuery(
+	name = "findOperationsByUser",
+	query = "SELECT * FROM TB_OPERATION WHERE USER = :user ORDER BY OP_DATE",
 	resultClass = Operation.class
 	)
 })

@@ -3,7 +3,7 @@ package br.com.grow.budgetingtool.model.dao;
 import java.util.Collection;
 import java.util.List;
 
-import br.com.grow.budgetingtool.model.entities.Category;
+import javax.naming.OperationNotSupportedException;
 
 public interface ICategoryDAO {
 	
@@ -11,16 +11,18 @@ public interface ICategoryDAO {
 
 	public Object findCategoryById(int index);
 
-	public Object findCategoryByName(String name);
+	public Object findCategoryByName(String name, Object userObj);
 
-	public List<Object> findCategoriesByNameLike(String name);
+	public List<Object> findCategoriesByNameLike(String name, Object userObj);
 
-	public List<Object> findCategoriesByNameIn(Collection<String> names);
+	public List<Object> findCategoriesByNameIn(Collection<String> names, Object userObj);
+	
+	public List<Object> findCategoriesByUser(Object userObj);
 
-	public Integer insertCategory(Category category);
+	public Integer insertCategory(Object categoryObj) throws OperationNotSupportedException;
 
-	public void updateCategory(Category category);
+	public void updateCategory(Object categoryObj) throws OperationNotSupportedException;
 
-	public void deleteCategory(Category user);
+	public void deleteCategory(Object userObj) throws OperationNotSupportedException;
 
 }
