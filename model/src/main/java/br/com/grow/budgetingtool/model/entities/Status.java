@@ -13,18 +13,18 @@ import org.hibernate.annotations.NamedNativeQuery;
 @NamedNativeQueries({
 	@NamedNativeQuery(
 	name = "findAllStatus",
-	query = "SELECT * FROM TB_STATUS ORDER BY ID",
+	query = "SELECT * FROM tb_status ORDER BY ID",
 	resultClass = Status.class
 	),
 	
 	@NamedNativeQuery(
 	name = "findStatusById",
-	query = "SELECT * FROM TB_STATUS WHERE ID = :id",
+	query = "SELECT * FROM tb_status WHERE ID = :id",
 	resultClass = Status.class
 	)
 })
 @Entity
-@Table(name = "TB_STATUS", catalog = "budgetingtool")
+@Table(name = "tb_status", catalog = "budgetingtool")
 public class Status {
 	
 	@Id

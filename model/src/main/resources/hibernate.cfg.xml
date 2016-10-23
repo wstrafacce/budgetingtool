@@ -23,7 +23,7 @@
 		</property>
 		
 		<property name="hibernate.connection.password">
-			root
+			garnett
 		</property>
 		
 		<!-- JDBC connection pool (use the built-in) -->

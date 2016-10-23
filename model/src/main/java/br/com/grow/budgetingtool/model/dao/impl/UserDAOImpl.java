@@ -66,6 +66,11 @@ public class UserDAOImpl implements IUserDAO {
 		try {
 			Query query = session.getNamedQuery("findUserByEmail");
 			query.setParameter("email", email);
+			if (query.getResultList().isEmpty()){
+				return null;
+			}
+			//getSingleResult considera uma query que sempre retorna resultados.
+			//Ocorre 'No entity found for query Exception' se a consulta nao retornar resultados (nao encontar user com o email informado)
 			user = query.getSingleResult();
 		} catch (HibernateException e) {
 			e.printStackTrace();

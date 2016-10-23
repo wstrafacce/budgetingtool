@@ -9,6 +9,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import br.com.grow.budgetingtool.bo.IUserBO;
+import br.com.grow.budgetingtool.bo.impl.UserBO;
+
 @Configuration
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
@@ -37,6 +40,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean(name = "authFilter")
     public Filter authFilter() {
         return new AuthFilterImpl();
+    }
+    
+    @Bean
+    public IUserBO getUserBO(){
+    	return new UserBO();
     }
 
 }
